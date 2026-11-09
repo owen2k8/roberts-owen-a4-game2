@@ -18,7 +18,7 @@ namespace MohawkGame2D
         /// </summary>
         /// 
 
-        Player player = new Player();
+        public Player player = new Player();
 
         public void Setup()
         {
@@ -26,11 +26,11 @@ namespace MohawkGame2D
             Window.SetSize(800, 600);
             Window.TargetFPS = 60;
 
-            player.player_color = Color.Red;
+            player.player_color = Color.Blue;
             player.speed = 150;
+            player.size = 15;
             player.x = Window.Size.X / 2;
             player.y = Window.Size.Y / 2;
-
         }
 
         /// <summary>
@@ -40,7 +40,12 @@ namespace MohawkGame2D
         {
 
             Window.ClearBackground(255, 255, 255);
-            
+
+            Draw.SetFillColor(Color.White);
+            Draw.SetLineSize(10);
+            Draw.SetLineColor(Color.Black);
+            Draw.Rectangle(50, 50, 700, 500);
+
             player.Update();
         }
     }
