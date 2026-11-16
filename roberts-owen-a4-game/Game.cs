@@ -19,6 +19,11 @@ namespace MohawkGame2D
         /// 
 
         public Player player = new Player();
+        public Dodgeballs dodgeball = new Dodgeballs();
+        public Player GetPlayer()
+        {
+            return player;
+        }
 
         public void Setup()
         {
@@ -29,8 +34,8 @@ namespace MohawkGame2D
             player.player_color = Color.Blue;
             player.speed = 150;
             player.size = 15;
-            player.x = Window.Size.X / 2;
-            player.y = Window.Size.Y / 2;
+            player.position.X = Window.Size.X / 2;
+            player.position.Y = Window.Size.Y / 2;
         }
 
         /// <summary>
@@ -46,7 +51,10 @@ namespace MohawkGame2D
             Draw.SetLineColor(Color.Black);
             Draw.Rectangle(50, 50, 700, 500);
 
+
+
             player.Update();
+            dodgeball.Update(this);
         }
     }
 
