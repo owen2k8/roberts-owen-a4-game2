@@ -55,6 +55,7 @@ namespace MohawkGame2D
 
             player.Update();
             dodgeball.Update(this);
+            //ask about how to create a new thread here
         }
     }
 

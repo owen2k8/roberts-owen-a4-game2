@@ -7,6 +7,7 @@ public class Player
 {
 
     public Color player_color;
+    public int health = 3;
     public int speed;
     public int size;
     public Vector2 position = new Vector2();
