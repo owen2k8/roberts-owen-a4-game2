@@ -1,5 +1,6 @@
 ﻿// Include the namespaces (code libraries) you need below.
 using System;
+using System.Globalization;
 using System.Numerics;
 
 // The namespace your code is in.
@@ -19,7 +20,10 @@ namespace MohawkGame2D
         /// 
 
         public Player player = new Player();
-        public Dodgeballs dodgeball = new Dodgeballs();
+        Dodgeballs[] dodgeballs = new Dodgeballs[100];
+
+        int previous_value = 0;
+
         public Player GetPlayer()
         {
             return player;
@@ -36,7 +40,13 @@ namespace MohawkGame2D
             player.size = 15;
             player.position.X = Window.Size.X / 2;
             player.position.Y = Window.Size.Y / 2;
+
+            for (int i = 0; i < dodgeballs.Length; i++)
+            {
+                dodgeballs[i] = new Dodgeballs();
+            }
         }
+
 
         /// <summary>
         ///     Update runs every frame.
@@ -51,11 +61,31 @@ namespace MohawkGame2D
             Draw.SetLineColor(Color.Black);
             Draw.Rectangle(50, 50, 700, 500);
 
+            //float seconds = Time.SecondsElapsed;
+           // int rotation = 1;
+           
+           // Console.WriteLine((int)seconds);
+           // Console.WriteLine(previous_value);
 
+            //if ((int)seconds != previous_value)
+            //{
+
+                //for (int i = 0; i < rotation; i++)
+               // {
+                // dodgeballs[i].Update(this);
+               // }
+            //}
+
+            //rotation += 1;
+            //previous_value = (int)seconds;
+
+            for (int i = 0; i < dodgeballs.Length; i++)
+            {
+                dodgeballs[i].Update(this);
+            }
 
             player.Update();
-            dodgeball.Update(this);
-            //ask about how to create a new thread here
+
         }
     }
 

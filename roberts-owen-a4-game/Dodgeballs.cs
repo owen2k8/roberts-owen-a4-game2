@@ -17,13 +17,21 @@ public class Dodgeballs
     private bool player_hit = false;
     private bool dodgeball_initialized = false;
 
+
+    //public void CreateDodgeball()
+    //{
+       // Vector2 position = new Vector2(400, 300);
+        //int diretion = Random.Integer(0, 2);
+       // int side = Random.Integer(0, 2);
+       // bool player_hit = false;
+
+
+    //}
+
     public void Update(Game game)
     {
 
         Player player = game.GetPlayer();
-
-        Console.WriteLine(dodgeball_initialized);
-        Console.WriteLine(side);
 
         bool is_player_colliding = Vector2.Distance(position, player.position) <= 25;
 
@@ -36,8 +44,6 @@ public class Dodgeballs
         if (dodgeball_initialized == false)
         {
 
-            //Console.WriteLine("HSADBHSBDAHDSBASDASD");
-
             if (direction == 0)
             {
                 float random_y_pos = Random.Integer(90, 480);
@@ -49,7 +55,6 @@ public class Dodgeballs
                 else
                 {
                     position.X = (Window.Size.X + 5);
-                    Console.WriteLine(position.X);
                 }
 
                 position.Y = random_y_pos;
