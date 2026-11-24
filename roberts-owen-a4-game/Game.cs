@@ -19,6 +19,7 @@ namespace MohawkGame2D
         /// </summary>
         /// 
 
+        //Defines the player, dodgeballs and variables
         public Player player = new Player();
         Dodgeballs[] dodgeballs = new Dodgeballs[100];
 
@@ -39,12 +40,16 @@ namespace MohawkGame2D
             Window.SetSize(800, 600);
             Window.TargetFPS = 60;
 
+
+            //sets player variables
             player.player_color = Color.Blue;
             player.speed = 150;
             player.size = 15;
             player.position.X = Window.Size.X / 2;
             player.position.Y = Window.Size.Y / 2;
 
+
+            //creates the dodgeballs and what time they should appear
             for (int i = 0; i < dodgeballs.Length; i++)
             {
                 dodgeballs[i] = new Dodgeballs();
@@ -62,16 +67,18 @@ namespace MohawkGame2D
 
             Window.ClearBackground(255, 255, 255); 
 
+            //checks if player health is at 0
             if (player.health <= 0)
             {
+                //stops the game
                 game_running = false;
             }
 
             if (game_running == true)
             {
 
+                //updates game time for dodgeball system
                 game_time += Time.DeltaTime;
-                //game_time = (int)game_time;
                 Console.WriteLine(game_time);
                 
                 Draw.SetFillColor(Color.White);
@@ -79,6 +86,7 @@ namespace MohawkGame2D
                 Draw.SetLineColor(Color.Black);
                 Draw.Rectangle(50, 50, 700, 500);
 
+                //draws text
                 Vector2 health_text_pos = new Vector2();
                 health_text_pos.X = 20;
                 health_text_pos.Y = 20;
@@ -90,6 +98,7 @@ namespace MohawkGame2D
                 dodgeball_text_pos.Y = 20;
                 Text.Draw("Dodgeballs: " + dodgeball_count + "/" + dodgeballs.Length, dodgeball_text_pos);
 
+                //updates dodgeballs
                 for (int i = 0; i < 100; i++)
                 {
                     if (dodgeballs[i].startTime <= game_time)
@@ -98,8 +107,10 @@ namespace MohawkGame2D
                     }
                 }
 
+                //updates player
                 player.Update();
 
+                //checks if all the dodgeballs have passed
                 if (dodgeball_count == 100)
                 {
                     game_win = true;
@@ -111,6 +122,7 @@ namespace MohawkGame2D
             else
             {
                 
+                //displays win screen
                 if (game_win == true)
                 {
                     Vector2 game_win_text = new Vector2();
@@ -120,6 +132,7 @@ namespace MohawkGame2D
                     Text.Draw("YOU WIN!", game_win_text);
                 }
                 
+                //displays game over screen
                 if (player.health <= 0)
                 {
                     Vector2 game_over_text = new Vector2();
@@ -128,6 +141,7 @@ namespace MohawkGame2D
                     Text.Color = Color.Red;
                     Text.Draw("GAME OVER", game_over_text);
                 }
+                //displays start screen
                 else
                 {
                     if (game_win == false)
@@ -142,6 +156,7 @@ namespace MohawkGame2D
                
             }
 
+            //detects if the player pressed space
             if (Input.IsKeyboardKeyPressed(KeyboardKey.Space))
             {
                 game_running = true;

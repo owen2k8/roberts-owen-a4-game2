@@ -5,6 +5,7 @@ namespace MohawkGame2D;
 public class Dodgeballs
 {
 
+    //sets public variables
     public float rate;
     public int amount;
     public int speed;
@@ -12,6 +13,7 @@ public class Dodgeballs
     public float startTime;
 
 
+    //sets private variables
     private Vector2 position = new Vector2(400, 300);
     private int direction = Random.Integer(0, 2);
     private int side = Random.Integer(0, 2);
@@ -20,29 +22,21 @@ public class Dodgeballs
     private bool detect_player = false;
     private bool added_to_count = false;
 
-
-    //public void CreateDodgeball()
-    //{
-       // Vector2 position = new Vector2(400, 300);
-        //int diretion = Random.Integer(0, 2);
-       // int side = Random.Integer(0, 2);
-       // bool player_hit = false;
-
-
-    //}
-
     public void Update(Game game)
     {
 
+        //gets the player from game
         Player player = game.GetPlayer();
 
+        //checks if the dodgeball was added to the counter
         if (added_to_count == false)
         {
             added_to_count = true;
             game.dodgeball_count++;
         }
 
-        if (Vector2.Distance(position, player.position) < 25)
+        //checks if the player is colliding with the dodgeball
+        if (Vector2.Distance(position, player.position) < 30)
         {
             if (player_hit == false && detect_player == true)
             {
@@ -51,6 +45,7 @@ public class Dodgeballs
             }
         }
 
+        //initializes all of the dodgeball's variables
         if (dodgeball_initialized == false)
         {
 
@@ -89,6 +84,7 @@ public class Dodgeballs
             }
 
         }
+        //updates the dodgeball's variables
         else
         {
 
