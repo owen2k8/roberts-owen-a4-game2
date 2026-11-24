@@ -23,6 +23,10 @@ namespace MohawkGame2D
         Dodgeballs[] dodgeballs = new Dodgeballs[100];
 
         int previous_value = 0;
+        bool game_running = false;
+        public int dodgeball_count = 0;
+        float game_time;
+        bool game_win = false;
 
         public Player GetPlayer()
         {
@@ -44,6 +48,8 @@ namespace MohawkGame2D
             for (int i = 0; i < dodgeballs.Length; i++)
             {
                 dodgeballs[i] = new Dodgeballs();
+                dodgeballs[i].startTime = (1 * i);
+
             }
         }
 
@@ -54,37 +60,92 @@ namespace MohawkGame2D
         public void Update()
         {
 
-            Window.ClearBackground(255, 255, 255);
+            Window.ClearBackground(255, 255, 255); 
 
-            Draw.SetFillColor(Color.White);
-            Draw.SetLineSize(10);
-            Draw.SetLineColor(Color.Black);
-            Draw.Rectangle(50, 50, 700, 500);
-
-            //float seconds = Time.SecondsElapsed;
-           // int rotation = 1;
-           
-           // Console.WriteLine((int)seconds);
-           // Console.WriteLine(previous_value);
-
-            //if ((int)seconds != previous_value)
-            //{
-
-                //for (int i = 0; i < rotation; i++)
-               // {
-                // dodgeballs[i].Update(this);
-               // }
-            //}
-
-            //rotation += 1;
-            //previous_value = (int)seconds;
-
-            for (int i = 0; i < dodgeballs.Length; i++)
+            if (player.health <= 0)
             {
-                dodgeballs[i].Update(this);
+                game_running = false;
             }
 
-            player.Update();
+            if (game_running == true)
+            {
+
+                game_time += Time.DeltaTime;
+                //game_time = (int)game_time;
+                Console.WriteLine(game_time);
+                
+                Draw.SetFillColor(Color.White);
+                Draw.SetLineSize(10);
+                Draw.SetLineColor(Color.Black);
+                Draw.Rectangle(50, 50, 700, 500);
+
+                Vector2 health_text_pos = new Vector2();
+                health_text_pos.X = 20;
+                health_text_pos.Y = 20;
+                Text.Color = Color.Black;
+                Text.Draw("Health: " + player.health, health_text_pos);
+
+                Vector2 dodgeball_text_pos = new Vector2();
+                dodgeball_text_pos.X = Window.Size.X - 350;
+                dodgeball_text_pos.Y = 20;
+                Text.Draw("Dodgeballs: " + dodgeball_count + "/" + dodgeballs.Length, dodgeball_text_pos);
+
+                for (int i = 0; i < 100; i++)
+                {
+                    if (dodgeballs[i].startTime <= game_time)
+                    {
+                        dodgeballs[i].Update(this);
+                    }
+                }
+
+                player.Update();
+
+                if (dodgeball_count == 100)
+                {
+                    game_win = true;
+                    game_running = false;
+                }
+
+            }
+
+            else
+            {
+                
+                if (game_win == true)
+                {
+                    Vector2 game_win_text = new Vector2();
+                    game_win_text.X = 340;
+                    game_win_text.Y = 285;
+                    Text.Color = Color.Green;
+                    Text.Draw("YOU WIN!", game_win_text);
+                }
+                
+                if (player.health <= 0)
+                {
+                    Vector2 game_over_text = new Vector2();
+                    game_over_text.X = 340;
+                    game_over_text.Y = 285;
+                    Text.Color = Color.Red;
+                    Text.Draw("GAME OVER", game_over_text);
+                }
+                else
+                {
+                    if (game_win == false)
+                    {
+                        Vector2 begin_text = new Vector2();
+                        begin_text.X = 220;
+                        begin_text.Y = 285;
+                        Text.Color = Color.Green;
+                        Text.Draw("Press SPACE to start!", begin_text);
+                    }
+                }
+               
+            }
+
+            if (Input.IsKeyboardKeyPressed(KeyboardKey.Space))
+            {
+                game_running = true;
+            }
 
         }
     }

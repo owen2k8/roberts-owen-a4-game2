@@ -9,6 +9,7 @@ public class Dodgeballs
     public int amount;
     public int speed;
     public int size;
+    public float startTime;
 
 
     private Vector2 position = new Vector2(400, 300);
@@ -16,6 +17,8 @@ public class Dodgeballs
     private int side = Random.Integer(0, 2);
     private bool player_hit = false;
     private bool dodgeball_initialized = false;
+    private bool detect_player = false;
+    private bool added_to_count = false;
 
 
     //public void CreateDodgeball()
@@ -33,12 +36,19 @@ public class Dodgeballs
 
         Player player = game.GetPlayer();
 
-        bool is_player_colliding = Vector2.Distance(position, player.position) <= 25;
-
-        if (is_player_colliding == true && player_hit == false)
+        if (added_to_count == false)
         {
-            player_hit = true;
-            player.health -= 1;
+            added_to_count = true;
+            game.dodgeball_count++;
+        }
+
+        if (Vector2.Distance(position, player.position) < 25)
+        {
+            if (player_hit == false && detect_player == true)
+            {
+                player_hit = true;
+                player.health -= 1;
+            }
         }
 
         if (dodgeball_initialized == false)
@@ -81,7 +91,9 @@ public class Dodgeballs
         }
         else
         {
-            
+
+            detect_player = true;
+
             if (direction == 0)
             {
                 if (side == 0)
@@ -101,13 +113,13 @@ public class Dodgeballs
             {
                 if (side == 0)
                 {
-                    position.Y += 360 * Time.DeltaTime;
+                    position.Y += 350 * Time.DeltaTime;
                     Draw.SetFillColor(Color.Red);
                     Draw.Circle(position.X, position.Y, 25);
                 }
                 else
                 {
-                    position.Y -= 360 * Time.DeltaTime;
+                    position.Y -= 350 * Time.DeltaTime;
                     Draw.SetFillColor(Color.Red);
                     Draw.Circle(position.X, position.Y, 25);
                 }
